@@ -19,6 +19,9 @@ public class ModuleManager {
         modules.add(new AutoMineModule());
         modules.add(new AutoFireworkModule());
         modules.add(new CordSnapperModule());
+        modules.add(new BaseFinderModule());
+        modules.add(new SusChunkModule());
+        modules.add(new FreecamModule());
     }
 
     public List<Module> all() { return modules; }
