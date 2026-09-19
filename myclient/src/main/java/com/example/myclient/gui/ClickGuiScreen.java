@@ -34,21 +34,28 @@ public class ClickGuiScreen extends Screen {
     @Override protected void init(){scroll=0;}
 
     @Override public void render(GuiGraphics g,int mouseX,int mouseY,float delta){
+        // Render the screen first, then draw the ClickGUI on top so the
+        // vanilla Screen renderer cannot cover the module/category labels.
+        super.render(g,mouseX,mouseY,delta);
+
         int left=30, y=30-scroll;
         g.fill(0,0,width,height,0xCC101014);
-        g.drawString(font,"MYCLIENT",left,12,0xFFFFFF);
+        g.drawString(font,Component.literal("MYCLIENT"),left,12,0xFFFFFF);
 
         for(var group:grouped().entrySet()){
-            g.drawString(font,"§l"+group.getKey(),left,y,0xFFFFFF);
+            g.drawString(font,Component.literal(group.getKey()),left,y,0xFFFFFF);
             y+=20;
             for(Module m:group.getValue()){
                 int h=24+(m.isEnabled()?m.getSettings().size()*20:0);
                 g.fill(left,y,left+300,y+h-2,0xFF202028);
-                g.drawString(font,m.getName()+(m.isEnabled()?"  ON":"  OFF"),left+8,y+7,m.isEnabled()?0x55FF88:0xBBBBBB);
+
+                Component moduleLabel=Component.literal(m.getName()+(m.isEnabled()?"  [ON]":"  [OFF]"));
+                g.drawString(font,moduleLabel,left+8,y+7,m.isEnabled()?0x55FF88:0xBBBBBB);
+
                 if(m.isEnabled()){
                     int sy=y+25;
                     for(Setting<?> s:m.getSettings()){
-                        g.drawString(font,s.getName()+": "+s.get().toString(),left+14,sy+3,0xDDDDDD);
+                        g.drawString(font,Component.literal(s.getName()+": "+s.get().toString()),left+14,sy+3,0xDDDDDD);
                         sy+=20;
                     }
                 }
@@ -56,7 +63,6 @@ public class ClickGuiScreen extends Screen {
             }
             y+=12;
         }
-        super.render(g,mouseX,mouseY,delta);
     }
 
     @Override public boolean mouseClicked(MouseButtonEvent click,boolean doubled){
