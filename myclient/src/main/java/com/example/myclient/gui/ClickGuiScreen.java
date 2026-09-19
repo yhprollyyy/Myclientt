@@ -5,13 +5,16 @@ import com.example.myclient.modules.Module;
 import com.example.myclient.settings.*;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.Click;
 import net.minecraft.network.chat.Component;
 import java.util.List;
 
 public class ClickGuiScreen extends Screen {
     private int scroll;
     public ClickGuiScreen(){super(Component.literal("Myclient ClickGUI"));}
+
     @Override protected void init(){scroll=0;}
+
     @Override public void render(GuiGraphics g,int mouseX,int mouseY,float delta){
         int left=30, top=30-scroll;
         g.fill(0,0,width,height,0xCC101014);
@@ -19,14 +22,13 @@ public class ClickGuiScreen extends Screen {
         List<Module> mods=MyClient.modules.all();
         int y=top;
         for(Module m:mods){
-            int h=24 + (m.isEnabled()?m.getSettings().size()*20:0);
+            int h=24+(m.isEnabled()?m.getSettings().size()*20:0);
             g.fill(left,y,left+260,y+h-2,0xFF202028);
             g.drawString(font,m.getName()+(m.isEnabled()?"  ON":"  OFF"),left+8,y+7,m.isEnabled()?0x55FF88:0xBBBBBB);
             if(m.isEnabled()){
                 int sy=y+25;
                 for(Setting<?> s:m.getSettings()){
-                    String val=s.get().toString();
-                    g.drawString(font,s.getName()+": "+val,left+14,sy+3,0xDDDDDD);
+                    g.drawString(font,s.getName()+": "+s.get().toString(),left+14,sy+3,0xDDDDDD);
                     sy+=20;
                 }
             }
@@ -34,8 +36,10 @@ public class ClickGuiScreen extends Screen {
         }
         super.render(g,mouseX,mouseY,delta);
     }
-    @Override public boolean mouseClicked(double x,double y,int button){
-        if(button!=0)return super.mouseClicked(x,y,button);
+
+    @Override public boolean mouseClicked(Click click, boolean doubled){
+        double x=click.x(), y=click.y();
+        if(click.button()!=0)return super.mouseClicked(click,doubled);
         int left=30, yy=30-scroll;
         for(Module m:MyClient.modules.all()){
             int h=24+(m.isEnabled()?m.getSettings().size()*20:0);
@@ -54,12 +58,13 @@ public class ClickGuiScreen extends Screen {
             }
             yy+=h+5;
         }
-        return super.mouseClicked(x,y,button);
+        return super.mouseClicked(click,doubled);
     }
+
     @Override public boolean mouseScrolled(double x,double y,double h,double v){
-        scroll += (int)(-v*20);
-        scroll=Math.max(0,scroll);
+        scroll=Math.max(0,scroll+(int)(-v*20));
         return true;
     }
+
     @Override public boolean isPauseScreen(){return false;}
 }
