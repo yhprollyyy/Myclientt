@@ -28,13 +28,13 @@ public class MyClient implements ClientModInitializer {
 
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
             dispatcher.register(ClientCommandManager.literal("toggle")
-                .then(ClientCommandManager.argument("module", StringArgumentType.word())
+                .then(ClientCommandManager.argument("module", StringArgumentType.greedyString())
                     .suggests((ctx, b) -> {
                         modules.all().forEach(m -> b.suggest(m.getName()));
                         return b.buildFuture();
                     })
                     .executes(ctx -> {
-                        String name = StringArgumentType.getString(ctx, "module");
+                        String name = StringArgumentType.getString(ctx, "module").trim();
                         var found = modules.byName(name);
                         if (found.isEmpty()) {
                             ctx.getSource().sendFeedback(Component.literal("No module named " + name));
