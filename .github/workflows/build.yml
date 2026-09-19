@@ -23,3 +23,5 @@ jobs:
         with:
           name: myclient-jar
           path: myclient/build/libs/*.jar
+
+# verified build workflow
