@@ -10,6 +10,7 @@ import net.minecraft.network.chat.Component;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.KeyMapping;
 import com.example.myclient.gui.ClickGuiScreen;
+import net.minecraft.resources.Identifier;
 import org.lwjgl.glfw.GLFW;
 
 public class MyClient implements ClientModInitializer {
@@ -18,7 +19,10 @@ public class MyClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         modules = new ModuleManager();
-        KeyMapping clickGuiKey = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.myclient.clickgui", GLFW.GLFW_KEY_RIGHT_SHIFT, KeyMapping.Category.create("key.category.myclient")));
+        KeyMapping clickGuiKey = KeyBindingHelper.registerKeyBinding(
+            new KeyMapping("key.myclient.clickgui", GLFW.GLFW_KEY_RIGHT_SHIFT,
+                new KeyMapping.Category(Identifier.fromNamespaceAndPath("myclient", "main")))
+        );
         ClientTickEvents.END_CLIENT_TICK.register(mc -> { if (clickGuiKey.consumeClick()) mc.setScreen(new ClickGuiScreen()); });
         ClientTickEvents.END_CLIENT_TICK.register(modules::tick);
 
