@@ -5,7 +5,7 @@ import com.example.myclient.modules.Module;
 import com.example.myclient.settings.*;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.Click;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
 import java.util.List;
 
@@ -37,7 +37,7 @@ public class ClickGuiScreen extends Screen {
         super.render(g,mouseX,mouseY,delta);
     }
 
-    @Override public boolean mouseClicked(Click click, boolean doubled){
+    @Override public boolean mouseClicked(MouseButtonEvent click, boolean doubled){
         double x=click.x(), y=click.y();
         if(click.button()!=0)return super.mouseClicked(click,doubled);
         int left=30, yy=30-scroll;
