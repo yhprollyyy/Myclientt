@@ -2,7 +2,7 @@ package com.example.myclient.modules;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.level.block.Blocks;
 import com.example.myclient.settings.IntSetting;
 import com.example.myclient.settings.BooleanSetting;
