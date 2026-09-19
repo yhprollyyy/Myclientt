@@ -2,7 +2,6 @@ package com.example.myclient.modules;
 
 import com.example.myclient.settings.DoubleSetting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Marker;
 import net.minecraft.world.phys.Vec3;
@@ -29,7 +28,6 @@ public class FreecamModule extends Module {
         camera=new Marker(EntityType.MARKER,mc.level);
         Vec3 eye=mc.player.getEyePosition(1.0F);
         camera.refreshPositionAndAngles(eye,playerYaw,playerPitch);
-        camera.setNoGravity(true);
         camera.setInvisible(true);
         mc.setCameraEntity(camera);
     }
