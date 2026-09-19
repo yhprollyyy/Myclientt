@@ -28,8 +28,7 @@ public class FreecamModule extends Module {
 
         camera=new Marker(EntityType.MARKER,mc.level);
         Vec3 eye=mc.player.getEyePosition(1.0F);
-        camera.setPos(eye);
-        camera.setRotation(playerYaw,playerPitch);
+        camera.refreshPositionAndAngles(eye,playerYaw,playerPitch);
         camera.setNoGravity(true);
         camera.setInvisible(true);
         mc.setCameraEntity(camera);
