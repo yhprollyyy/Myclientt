@@ -78,8 +78,8 @@ public class ClickGuiScreen extends Screen {
                     // Bright outline/left marker makes the exact clickable row obvious.
                     g.fill(left,y,left+4,y+h-2,m.isEnabled()?0xFF55FF88:0xFF7777FF);
                     if(over){
-                        g.fill(left+4,y,left+360,y+2,0xFFFFFFFFFF);
-                        g.fill(left+4,y+h-4,left+360,y+h-2,0xFFFFFFFFFF);
+                        g.fill(left+4,y,left+360,y+2,0xFFFFFFFF);
+                        g.fill(left+4,y+h-4,left+360,y+h-2,0xFFFFFFFF);
                     }
 
                     String state=m.isEnabled()?"[ON]":"[OFF]";
