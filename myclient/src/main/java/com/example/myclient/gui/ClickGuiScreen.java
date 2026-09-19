@@ -48,8 +48,8 @@ public class ClickGuiScreen extends Screen {
 
         g.fill(0,0,width,height,0xF0101014);
         g.fill(18,8,width-18,31,0xFF252530);
-        g.drawString(font,Component.literal("MYCLIENT  •  CLICK GUI"),30,16,0xFFFFFF);
-        g.drawString(font,Component.literal("Left click = toggle   •   Scroll = move"),width-235,16,0xAAAAAA);
+        g.drawString(font,Component.literal("MYCLIENT  •  CLICK GUI"),30,16,0xFFFFFFFF);
+        g.drawString(font,Component.literal("Left click = toggle   •   Scroll = move"),width-235,16,0xFFAAAAAA);
 
         int left=24;
         int y=42-scroll;
@@ -59,7 +59,7 @@ public class ClickGuiScreen extends Screen {
             int headerY=y;
             if(headerY+18>=35 && headerY<height-30){
                 g.fill(left,headerY,left+360,headerY+20,0xFF343441);
-                g.drawString(font,Component.literal(group.getKey()),left+8,headerY+6,0xFFFFFF);
+                g.drawString(font,Component.literal(group.getKey()),left+8,headerY+6,0xFFFFFFFF);
             }
             y+=24;
 
@@ -78,13 +78,13 @@ public class ClickGuiScreen extends Screen {
                     // Bright outline/left marker makes the exact clickable row obvious.
                     g.fill(left,y,left+4,y+h-2,m.isEnabled()?0xFF55FF88:0xFF7777FF);
                     if(over){
-                        g.fill(left+4,y,left+360,y+2,0xFFFFFFFF);
-                        g.fill(left+4,y+h-4,left+360,y+h-2,0xFFFFFFFF);
+                        g.fill(left+4,y,left+360,y+2,0xFFFFFFFFFF);
+                        g.fill(left+4,y+h-4,left+360,y+h-2,0xFFFFFFFFFF);
                     }
 
                     String state=m.isEnabled()?"[ON]":"[OFF]";
-                    g.drawString(font,Component.literal(m.getName()),left+14,y+6,0xFFFFFF);
-                    g.drawString(font,Component.literal(state),left+302,y+6,m.isEnabled()?0x55FF88:0xAAAAAA);
+                    g.drawString(font,Component.literal(m.getName()),left+14,y+6,0xFFFFFFFF);
+                    g.drawString(font,Component.literal(state),left+302,y+6,m.isEnabled()?0x55FF88:0xFFAAAAAA);
 
                     if(m.isEnabled()){
                         int sy=y+25;
@@ -93,7 +93,7 @@ public class ClickGuiScreen extends Screen {
                             if(settingOver){
                                 g.fill(left+8,sy-3,left+352,sy+17,0xFF454554);
                             }
-                            g.drawString(font,Component.literal(s.getName()+": "+s.get().toString()),left+18,sy+3,0xDDDDDD);
+                            g.drawString(font,Component.literal(s.getName()+": "+s.get().toString()),left+18,sy+3,0xFFDDDDDD);
                             sy+=20;
                         }
                     }
@@ -104,8 +104,8 @@ public class ClickGuiScreen extends Screen {
         }
 
         g.fill(18,height-28,width-18,height-8,0xFF252530);
-        g.drawString(font,Component.literal("Hovering: "+hovered),28,height-21,0xFFFFFF);
-        g.drawString(font,Component.literal("Click the highlighted row to toggle it"),width-255,height-21,0xAAAAAA);
+        g.drawString(font,Component.literal("Hovering: "+hovered),28,height-21,0xFFFFFFFF);
+        g.drawString(font,Component.literal("Click the highlighted row to toggle it"),width-255,height-21,0xFFAAAAAA);
     }
 
     @Override public boolean mouseClicked(MouseButtonEvent click,boolean doubled){
