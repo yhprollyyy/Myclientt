@@ -18,7 +18,7 @@ public class MyClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         modules = new ModuleManager();
-        KeyMapping clickGuiKey = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.myclient.clickgui", GLFW.GLFW_KEY_RIGHT_SHIFT, "category.myclient"));
+        KeyMapping clickGuiKey = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.myclient.clickgui", GLFW.GLFW_KEY_RIGHT_SHIFT, KeyMapping.Category.create("key.category.myclient")));
         ClientTickEvents.END_CLIENT_TICK.register(mc -> { if (clickGuiKey.consumeClick()) mc.setScreen(new ClickGuiScreen()); });
         ClientTickEvents.END_CLIENT_TICK.register(modules::tick);
 
