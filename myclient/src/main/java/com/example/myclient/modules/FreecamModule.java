@@ -15,6 +15,15 @@ public class FreecamModule extends Module {
 
     public FreecamModule(){super("Freecam");}
 
+    private void syncCameraTransform(){
+        if(camera==null)return;
+        camera.xo=camera.getX();
+        camera.yo=camera.getY();
+        camera.zo=camera.getZ();
+        camera.yRotO=camera.getYRot();
+        camera.xRotO=camera.getXRot();
+    }
+
     @Override protected void onEnable(){
         Minecraft mc=Minecraft.getInstance();
         if(mc.player==null||mc.level==null)return;
@@ -26,7 +35,9 @@ public class FreecamModule extends Module {
         camera.setPos(eye);
         camera.setYRot(mc.player.getYRot());
         camera.setXRot(mc.player.getXRot());
+        camera.setDeltaMovement(Vec3.ZERO);
         camera.setInvisible(true);
+        syncCameraTransform();
         mc.setCameraEntity(camera);
     }
 
@@ -45,10 +56,16 @@ public class FreecamModule extends Module {
     }
 
     @Override public void onTick(Minecraft mc){
-        if(camera==null||mc.player==null)return;
+        if(camera==null||mc.player==null||playerPos==null)return;
 
         mc.player.setPos(playerPos);
         mc.player.setDeltaMovement(Vec3.ZERO);
+
+        // Minecraft updates the player's view rotation from the mouse.
+        // Copy it to the freecam entity so the camera does not fight
+        // the normal player camera rotation.
+        camera.setYRot(mc.player.getYRot());
+        camera.setXRot(mc.player.getXRot());
 
         double horizontal=speed.get()*(mc.options.keySprint.isDown()?2.0:1.0);
         double vertical=verticalSpeed.get();
@@ -68,5 +85,10 @@ public class FreecamModule extends Module {
 
         camera.setPos(camera.getX()+x,camera.getY()+y,camera.getZ()+z);
         camera.setDeltaMovement(Vec3.ZERO);
+
+        // Camera.setup interpolates entity position/rotation between the
+        // previous and current tick. Keep both sides synchronized so the
+        // camera cannot flash between stale and current transforms.
+        syncCameraTransform();
     }
 }
