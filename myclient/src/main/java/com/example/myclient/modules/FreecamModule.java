@@ -9,8 +9,6 @@ import net.minecraft.world.phys.Vec3;
 public class FreecamModule extends Module {
     private Marker camera;
     private Vec3 playerPos;
-    private float playerYaw;
-    private float playerPitch;
 
     private final DoubleSetting speed=addSetting(new DoubleSetting("Speed",1.0,0.1,5.0,0.1));
     private final DoubleSetting verticalSpeed=addSetting(new DoubleSetting("VerticalSpeed",1.0,0.1,5.0,0.1));
@@ -22,12 +20,12 @@ public class FreecamModule extends Module {
         if(mc.player==null||mc.level==null)return;
 
         playerPos=mc.player.position();
-        playerYaw=mc.player.getYRot();
-        playerPitch=mc.player.getXRot();
 
         camera=new Marker(EntityType.MARKER,mc.level);
         Vec3 eye=mc.player.getEyePosition(1.0F);
-        camera.refreshPositionAndAngles(eye,playerYaw,playerPitch);
+        camera.setPos(eye);
+        camera.setYRot(mc.player.getYRot());
+        camera.setXRot(mc.player.getXRot());
         camera.setInvisible(true);
         mc.setCameraEntity(camera);
     }
